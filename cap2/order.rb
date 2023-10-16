@@ -1,0 +1,2 @@
+order = "カフェラテ"
+puts order
