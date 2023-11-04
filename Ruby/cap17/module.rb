@@ -323,3 +323,39 @@ end
 user = User.new('Bururin')
 user.change_name
 user.name
+
+# 名前空間を分けて名前の衝突を防ぐ
+# 同名のクラスがあっても外側のモジュール名が違えば衝突しない
+
+module Baseball
+  class Second
+    def initialize(player, uniform_number)
+      @player = player
+      @uniform_number = uniform_number
+    end
+  end
+end
+
+module Clock
+  class Second
+    def initialize(digits)
+      @digits = digits
+    end
+  end
+end
+
+# モジュール名::クラス名という形でモジュールに属するクラスを参照できる
+
+Baseball::Second.new('Alice', 13)
+
+Clock::Second.new(13)
+
+# モジュールに特異メソッドを定義する
+
+module Loggable
+  def self.log(text)
+    puts "[LOG] #{text}"
+  end
+end
+
+Loggable.log('Hello.')
