@@ -350,12 +350,32 @@ Baseball::Second.new('Alice', 13)
 
 Clock::Second.new(13)
 
-# モジュールに特異メソッドを定義する
+# モジュールに定数を定義する
 
 module Loggable
-  def self.log(text)
-    puts "[LOG] #{text}"
+  PREFIX = '[LOG]'
+
+  def log(text)
+    puts "#{PREFIX} #{text}"
   end
 end
 
-Loggable.log('Hello.')
+Loggable::PREFIX
+
+# モジュール関数や定数を持つモジュールの例
+
+Math.sqrt(2)
+
+class Calculator
+  include Math
+
+  def calc_sqrt(n)
+    sqrt(n)
+  end
+end
+
+calculator = Calculator.new
+calculator.calc_sqrt(2)
+
+Kernel.puts 'Hello.'
+Kernel.p [1,2,3]
