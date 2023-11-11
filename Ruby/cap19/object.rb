@@ -79,3 +79,30 @@ repeat_proc = Proc.new{|text| text * 2}
 question_proc = Proc.new { |text| "#{text}?" }
 
 greet(shuffle_proc, repeat_proc, question_proc)
+
+# Proc.newの作成と実行
+add_proc = Proc.new { |a, b| a + b }
+add_proc.call(10, 20)
+
+# ラムダの作成と実行
+add_lambda = ->(a, b) { a + b }
+add_lambda.call(10, 20)
+
+# Proc.newの作成と実行
+
+add_proc = Proc.new { |a, b| a.to_i + b.to_i }
+add_proc.call(10)
+add_proc.call(10, 20, 100)
+
+# Proc.newは引数が一つまたは三つでも呼び出しが可能
+
+# ラムダの作成と実行
+add_lambda = ->(a, b) { a.to_i + b.to_i }
+add_lambda.call(10)
+
+# ラムダは引数の数が合わないとエラーになる
+
+# Proc.newの作成と実行
+add_proc = Proc.new { |a,b| a + b}
+add_proc.class
+add_proc.lambda?
