@@ -168,3 +168,54 @@ records = [
     puts "not match: #{record}"
   end
 end
+
+# in節でインスタンス変数を使おうとすると、構文エラーになる
+
+case 1
+in @n
+  "@n=#{@n}"
+end
+
+# arrayパターン
+
+case [1, 2, 3]
+in [a, b, c]
+  "a=#{a}, b=#{b}, c=#{c}"
+end
+
+case [1, 2, 3]
+in [a, [b, c]]
+  "a=#{a}, b=#{b}, c=#{c}"
+end
+
+case [1,[2, 3]]
+in [a, b]
+  "a=#{a}, b=#{b}"
+end
+
+case [1, 999, 3]
+in [1, n, 3]
+  "n=#{n}"
+end
+
+case ['Alice', 999, 3]
+in [String, 10.., n]
+"n=#{n}"
+end
+
+# in節に同じ変数名を２回以上使うと構文エラーになる
+
+# 任意の要素を表現する目的で例外的に２回以上使うことができる
+
+case [1, 2, 3]
+in [_, _, 3]
+  'matched'
+end
+
+# 意味は上記と同じ
+
+case [1, 2, 3]
+in [_a, _a, 3]
+  'matched'
+end
+
