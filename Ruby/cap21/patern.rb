@@ -219,3 +219,123 @@ in [_a, _a, 3]
   'matched'
 end
 
+# in節で＊を使うと、残りの要素を指定したことになる
+
+case [1, 2, 3, 4, 5]
+in [1, *rest]
+  "rest=#{rest}"
+end
+
+# *は最後の要素だけでなく、最初や途中で使える
+
+case [1, 2, 3, 4, 5]
+in [*rest, 5]
+  "rest=#{rest}"
+end
+
+case [1, 2, 3, 4, 5]
+in [1, *rest, 5]
+  "rest=#{rest}"
+end
+
+case [1, 2, 3, 4, 5]
+in [1, *]
+  'matched'
+end
+
+# 上記と同じ意味
+
+case [1, 2, 3, 4, 5]
+in [1,]
+  'matched'
+end
+
+# in節の一番外側の[]は省略できる
+
+case [1, [2, 3]]
+in a, [b, c]
+  "a=#{a}, b=#{b}, c=#{c}"
+end
+
+# hashパターン
+
+case {name: 'Alice', age: 20}
+in {name: name, age: age}
+  "name: #{name}, age: #{age}"
+end
+
+case {name: 'Alice', age: 20}
+in {name:, age:}
+"name: #{name}, age: #{age}"
+end
+
+# キーの順番はマッチの結果には影響しない
+
+case {name: 'Alice', age: 20}
+in {age:, name:}
+"name: #{name}, age: #{age}"
+end
+
+# 固定の値や===で比較可能な値を指定することもできる
+
+case {name: 'Alice', age: 20, gender: :female}
+in {name: 'Alice', age: 18.., gender:}
+"gender = #{gender}"
+end
+
+case {name: 'Alice', children: ['Bob']}
+in {name:, children: [child]}
+"name = #{name}, child = #{child}"
+end
+
+case {name: 'Alice', age: 20, gender: :female}
+in {name: 'Alice', gender:}
+"gender = #{gender}"
+end
+
+cars = [
+  {name: 'The Beatle', engine: '105ps'},
+  {name: 'Prius', engine: '98ps', motor: '72ps'},
+  {name: 'Tesla', motor: '306ps'}
+]
+
+cars.each do |car|
+  case car 
+  in {name:, engine:}
+  puts "Gasoline: #{name} / engine: #{engine}"
+  in {name:, motor:}
+  puts "EV: #{name} / motor: #{motor}"
+  in {name:, engine:, motor:}
+  puts "Hybrid: #{name} / engine: #{engine} / motor: #{motor}"
+  end
+end
+
+case {a: 1}
+in { }
+'empty'
+in {a:}
+"a=#{a}"
+end
+
+case { }
+in { }
+  'empty'
+in {a:}
+  "a=#{a}"
+end
+
+# key => value形式を使うと構文エラーになる
+
+case {name: 'Alice', age: 20, gender: :female}
+in {name: 'Alice', **rest}
+"rest = #{rest}"
+end
+
+# **が使える位置は最後のパターンだけ
+
+case {name: 'Alice', age: 20, gender: :female}
+in {name: 'Alice', **}
+  'matched'
+end
+
+# nameのキーと値がマッチしたらそれ以外のキーと値は任意（変数として使われない）
